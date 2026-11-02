@@ -1,0 +1,30 @@
+{
+  "// RAM/CPU protection for the IDE": "Prevents VS Code from force-closing on this project",
+  "typescript.tsserver.maxTsServerMemory": 3072,
+  "typescript.disableAutomaticTypeAcquisition": true,
+  "typescript.tsserver.experimental.enableProjectDiagnostics": false,
+
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/.next/**": true,
+    "**/.git/objects/**": true,
+    "**/dist/**": true,
+    "**/build/**": true,
+    "**/*.glb": true,
+    "**/public/assets/**": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/package-lock.json": true,
+    "**/*.glb": true
+  },
+  "files.exclude": {
+    "**/.next": true
+  },
+  "search.followSymlinks": false,
+  "editor.minimap.enabled": false,
+  "workbench.editor.limit.enabled": true,
+  "workbench.editor.limit.value": 6
+}
