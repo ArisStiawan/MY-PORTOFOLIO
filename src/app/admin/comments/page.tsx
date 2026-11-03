@@ -248,9 +248,9 @@ export default function AdminCommentsPage() {
             </div>
           ) : (
             <div className="space-y-4">
-              {comments.map((comment) => (
+              {comments.map((comment, i) => (
                 <div
-                  key={comment.id}
+                  key={`admin-comment-${comment.id}-${i}`}
                   className={`rounded-2xl border transition-all p-4 sm:p-5 ${
                     comment.is_pinned
                       ? "border-yellow-500/30 bg-yellow-500/[0.03]"

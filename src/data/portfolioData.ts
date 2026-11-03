@@ -508,7 +508,7 @@ export const dummyTechStacks: TechStackItem[] = [
 
 export const dummyComments: CommentItem[] = [
   {
-    id: 1,
+    id: -101,
     name: 'Budi Santoso',
     comment:
       'Portfolio yang sangat rapi dan interaktif! Desain UI/UX serta transisi Framer Motion-nya sangat memanjakan mata.',
@@ -525,7 +525,7 @@ export const dummyComments: CommentItem[] = [
     ],
   },
   {
-    id: 2,
+    id: -102,
     name: 'Siti Rahma',
     comment:
       'Implementasi modern tech stack Next.js & DevOps arsitekturnya solid banget. Sukses selalu untuk project-project berikutnya!',
@@ -535,7 +535,7 @@ export const dummyComments: CommentItem[] = [
     created_at: '2026-03-05T14:30:00.000Z',
   },
   {
-    id: 3,
+    id: -103,
     name: 'Ahmad Fauzi',
     comment:
       'Desainnya futuristik dan loading-nya super cepat. Inspiratif sekali!',

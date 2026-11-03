@@ -12,6 +12,17 @@ import { CommentItem } from '@/data/portfolioData'
 
 export type { CommentItem }
 
+const deduplicateComments = (list: CommentItem[]): CommentItem[] => {
+  const seen = new Set<number | string>()
+  return list.filter((item) => {
+    if (item.id !== undefined && item.id !== null) {
+      if (seen.has(item.id)) return false
+      seen.add(item.id)
+    }
+    return true
+  })
+}
+
 export default function useComments() {
   const [comments, setComments] = useState<CommentItem[]>([])
   const [loading, setLoading] = useState(false)
@@ -23,7 +34,7 @@ export default function useComments() {
       try {
         const data = await fetchCommentsService()
         if (isMounted) {
-          setComments(data || [])
+          setComments(deduplicateComments(data || []))
         }
       } catch (err) {
         console.error('Error fetching comments:', err)
@@ -50,7 +61,7 @@ export default function useComments() {
         async () => {
           const data = await fetchCommentsService()
           if (isMounted) {
-            setComments(data || [])
+            setComments(deduplicateComments(data || []))
           }
         }
       )
@@ -89,8 +100,13 @@ export default function useComments() {
         imageUrl,
       })
 
-      // instant UI update (tanpa nunggu realtime)
-      setComments((prev) => [newComment, ...prev])
+      // Instant UI update: hapus dummy comments dan hindari duplikasi ID
+      setComments((prev) => {
+        const cleanPrev = prev.filter(
+          (item) => Number(item.id) > 0 && item.id !== newComment.id
+        )
+        return [newComment, ...cleanPrev]
+      })
       return { success: true, data: newComment }
     } catch (err) {
       console.error('Error adding comment:', err)

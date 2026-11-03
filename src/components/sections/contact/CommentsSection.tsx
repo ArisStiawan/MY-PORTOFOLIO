@@ -200,7 +200,7 @@ export default function CommentsSection() {
           <AnimatePresence initial={false}>
             {comments.map((item, i) => (
               <motion.div
-                key={item.id || i}
+                key={`comment-${item.id}-${i}`}
                 layout
                 initial={{
                   opacity: 0,

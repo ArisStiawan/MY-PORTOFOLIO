@@ -174,7 +174,7 @@ FOR EACH ROW
 EXECUTE FUNCTION public.update_updated_at_column();
 
 -- ========================================
--- SEED DATA: FLAGSHIP PROJECT (LE ACADEMY)
+-- SEED DATA: 6 PROJECTS (portfolioData.ts)
 -- ========================================
 
 INSERT INTO public.projects (
@@ -187,7 +187,8 @@ INSERT INTO public.projects (
     key_features,
     image_url,
     image_urls
-) VALUES (
+) VALUES
+(
     '1a2b3c4d-0000-4000-8000-000000000001',
     'LE Academy – Multi-Segment Learning Management System',
     'LE Academy adalah platform Learning Management System (LMS) modern berbasis web yang mengadopsi arsitektur decoupled front-end & back-end. Dirancang untuk mengakomodasi berbagai segmen pengguna (Siswa Bimbingan Belajar, Karyawan Korporat, Mentor, dan Lembaga B2B Partner) dalam satu sistem terpadu. Dilengkapi Role-Based Access Control (RBAC) 5 peran, sistem gamifikasi pembelajaran edukatif (poin XP, level progression, streak belajar harian, dan global leaderboard), reader in-app materi interaktif, engine evaluasi kuis otomatis & penugasan berkas, webinar live, hingga penerbitan e-sertifikat kelulusan digital.',
@@ -202,21 +203,10 @@ INSERT INTO public.projects (
         'Manajemen Bimbingan Daring & Webinar Live Terintegrasi',
         'Penerbitan E-Sertifikat Kelulusan Otomatis & Transkrip Riwayat Belajar Lengkap'
     ],
-    'https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1200&auto=format&fit=crop',
-    '["https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1200&auto=format&fit=crop", "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1200&auto=format&fit=crop", "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop", "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=1200&auto=format&fit=crop"]'::jsonb
-) ON CONFLICT (id) DO NOTHING;
-
-INSERT INTO public.projects (
-    id,
-    title,
-    description,
-    live_url,
-    github_url,
-    technologies,
-    key_features,
-    image_url,
-    image_urls
-) VALUES (
+    '/assets/projects/leacademy/Hero.png',
+    '["/assets/projects/leacademy/Hero.png", "/assets/projects/leacademy/Dashboard.png", "/assets/projects/leacademy/Materi.png"]'::jsonb
+),
+(
     '1a2b3c4d-0000-4000-8000-000000000002',
     'EarScope-AI – Intelligent Otoscope Diagnosis & Telemedicine Platform',
     'EarScope-AI adalah sistem telemedicine dan diagnosis kesehatan telinga luar & tengah berbasis Deep Learning (YOLOv8) terintegrasi. Dirancang sebagai proyek Tugas Akhir (TA) untuk membantu dokter THT melakukan pemeriksaan klinis secara objektif dan real-time menggunakan kamera otoskop USB dan edge AI (NVIDIA Jetson). Mengadopsi arsitektur Decoupled Dual-Server: Laravel 11 untuk manajemen antrean pasien, rekam medis digital, dan sinkronisasi Cloudinary Video, serta Flask microservice untuk streaming kamera low-latency MJPEG dan inferensi otomatis 6 kondisi telinga (Otitis Media Akut, Kronis, Serumen Plug, Myringosklerosis, Normal, dan Undefined).',
@@ -231,6 +221,112 @@ INSERT INTO public.projects (
         'Manajemen Antrean Konsultasi, Rekam Medis (EMR), & Otomasi Hasil Diagnosis',
         'Transcoding & Cloud Storage Video via Cloudinary (Auto-convert H.264 MP4)'
     ],
-    'https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200&auto=format&fit=crop',
-    '["https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200&auto=format&fit=crop", "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=80&w=1200&auto=format&fit=crop", "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?q=80&w=1200&auto=format&fit=crop", "https://images.unsplash.com/photo-1516549655169-df83a0774514?q=80&w=1200&auto=format&fit=crop"]'::jsonb
-) ON CONFLICT (id) DO NOTHING;
+    '/assets/projects/Earscope/Result.png',
+    '["/assets/projects/Earscope/Login.png", "/assets/projects/Earscope/DoctorDashboard.png", "/assets/projects/Earscope/PatientDashboard.png", "/assets/projects/Earscope/Result.png"]'::jsonb
+),
+(
+    '1a2b3c4d-0000-4000-8000-000000000003',
+    'MiddleBoard – Enterprise Project Management & Production Tracker',
+    'MiddleBoard adalah platform manajemen proyek dan pelacakan produksi berbasis web enterprise yang dikembangkan untuk PT Kodegiri. Sistem ini mengadopsi arsitektur decoupled (Laravel 11 REST API + Vue.js 3 SPA) dengan containerisasi Docker Compose (Backend, Frontend, MySQL 8, dan Nginx Reverse Proxy). Dirancang untuk membantu tim operasional melacak pipeline proyek secara end-to-end: dari waiting list request, quotation, alokasi sumber daya, production board tracking, manajemen dokumen internal/eksternal, hingga pelacakan pembayaran pihak ketiga. Dilengkapi dengan Role-Based Access Control, auto-generated PDF report via DomPDF, dan API documentation via Scramble & Scribe.',
+    'https://board.kodeno.id',
+    'https://github.com/kodegiri/MiddleBoard-BE',
+    ARRAY['Laravel 11', 'Vue.js 3', 'PHP 8.2', 'JavaScript', 'Tailwind CSS', 'MySQL', 'Docker', 'Nginx', 'Laravel Sanctum', 'Chart.js'],
+    ARRAY[
+        'Pipeline Proyek End-to-End (Waiting List → Quotation → Resource Pool → Production Board → Delivery)',
+        'Role-Based Access Control (RBAC) dengan Multi-Ability per Role (Sales, PM, Engineer, Admin)',
+        'Production Board Tracking & Project Allocation dengan Visual Dashboard',
+        'Manajemen Dokumen Internal/Eksternal & Third-Party Payment Tracker',
+        'Auto-Generated PDF Report (Quotation & Invoice) via DomPDF',
+        'Containerisasi Docker Compose (BE + FE + MySQL + Nginx Reverse Proxy)',
+        'REST API Documentation otomatis via Scramble & Scribe'
+    ],
+    '/assets/projects/Middleboard/UserManage.png',
+    '["/assets/projects/Middleboard/UserManage.png", "/assets/projects/middleboard.webp"]'::jsonb
+),
+(
+    '1a2b3c4d-0000-4000-8000-000000000004',
+    'PawOn-Sight – Smart Bakery Inventory & Financial Management',
+    'PawOn-Sight adalah sistem informasi manajemen toko roti/bakery modern berbasis web yang mengintegrasikan pencatatan stok bahan baku, produk reguler & spesial, rekomendasi produksi, serta laporan pemasukan dan pengeluaran. Dibangun dengan Laravel 11 dan Filament 3 Admin Panel, aplikasi ini menyediakan dashboard interaktif dengan widget statistik real-time, grafik tren produksi & penjualan (Chart.js), manajemen kategori produk, fitur import/export data via Excel (Maatwebsite), autentikasi JWT, dan proteksi reCAPTCHA. Dirancang dengan Cluster-based Navigation untuk pengelompokan fitur produk yang terorganisir.',
+    'https://github.com/ArisStiawan/PawOn-Sight',
+    'https://github.com/ArisStiawan/PawOn-Sight',
+    ARRAY['Laravel 11', 'Filament 3', 'PHP 8.2', 'Tailwind CSS', 'Vue.js', 'MySQL', 'Chart.js', 'JWT Auth', 'Maatwebsite Excel'],
+    ARRAY[
+        'Dashboard Analitik Real-time (Widget Statistik, Grafik Tren Produksi & Penjualan)',
+        'Manajemen Stok Bahan Baku & Stock Opname dengan Pelacakan Historis',
+        'Katalog Produk Reguler & Spesial dengan Cluster-based Navigation',
+        'Sistem Rekomendasi Produksi Otomatis Berdasarkan Data Penjualan',
+        'Pencatatan Pemasukan & Pengeluaran dengan Laporan Keuangan Periodik',
+        'Import/Export Data Excel (Maatwebsite) & Backup Database (Spatie)',
+        'Autentikasi JWT & Proteksi Form dengan Google reCAPTCHA'
+    ],
+    '/assets/projects/Pawon/Dashboard.png',
+    '["/assets/projects/Pawon/Dashboard.png", "/assets/projects/Pawon/pawonsight.webp"]'::jsonb
+),
+(
+    '1a2b3c4d-0000-4000-8000-000000000005',
+    'Simslife Face Recognition – AI-Powered Attendance System',
+    'Simslife Face Recognition adalah sistem absensi kehadiran otomatis berbasis pengenalan wajah (Face Recognition) yang dikembangkan saat program magang. Berjalan di perangkat NVIDIA Jetson AGX Xavier untuk akselerasi GPU real-time, sistem ini mendeteksi wajah karyawan melalui kamera live dan mencatat kehadiran secara otomatis ke database SQLite. Dilengkapi FastAPI REST backend untuk integrasi multi-device, Streamlit dashboard interaktif untuk monitoring kehadiran & registrasi wajah baru, serta fitur auto-checkout otomatis. Mendukung multi-pose encoding (center, left, right) dan akselerasi hardware CUDA untuk performa inference optimal.',
+    'https://github.com/ArisStiawan/Sistem-Absensi-Berbasis-FaceRecognition',
+    'https://github.com/ArisStiawan/Sistem-Absensi-Berbasis-FaceRecognition',
+    ARRAY['Python', 'OpenCV', 'face_recognition', 'FastAPI', 'Streamlit', 'SQLite', 'NVIDIA Jetson', 'CUDA', 'Plotly'],
+    ARRAY[
+        'Real-time Face Detection & Recognition via Kamera Live (OpenCV + dlib)',
+        'Multi-Pose Face Encoding (Center, Left, Right) untuk Akurasi Tinggi',
+        'Akselerasi GPU Hardware (NVIDIA Jetson AGX Xavier + CUDA)',
+        'FastAPI REST Backend untuk Integrasi Multi-Device & IoT',
+        'Streamlit Dashboard Interaktif (Monitoring Kehadiran, Registrasi Wajah, User Management)',
+        'Auto-Checkout Otomatis & Pelacakan Kehadiran Harian ke CSV/SQLite',
+        'OAuth2 Authentication & Role-Based API Access'
+    ],
+    '/assets/projects/Attendance/Overview.png',
+    '["/assets/projects/Attendance/Overview.png", "/assets/projects/Attendance/RegUser.png", "/assets/projects/Attendance/UserManage.png"]'::jsonb
+),
+(
+    '1a2b3c4d-0000-4000-8000-000000000006',
+    'JoinSystem – Blog & Content Management Platform (Vue 3 + TypeScript)',
+    'JoinSystem adalah platform blog dan manajemen konten modern yang dibangun dengan Vue 3 Composition API, TypeScript, dan Vite. Menampilkan antarmuka responsif dengan DaisyUI + Tailwind CSS, aplikasi ini menyediakan halaman beranda dinamis dengan Hero Section, Featured Posts, Category Browser, Author Profiles, Testimonials, dan Join Section. Dilengkapi routing multi-halaman (About, Blog, Contact, Privacy, Category, Author Detail) menggunakan Vue Router, state management via Pinia, dan arsitektur component-based yang modular.',
+    'https://github.com/ArisStiawan/latihan-slicing',
+    'https://github.com/ArisStiawan/latihan-slicing',
+    ARRAY['Vue.js 3', 'TypeScript', 'Vite', 'Tailwind CSS', 'DaisyUI', 'Pinia', 'Vue Router', 'SASS'],
+    ARRAY[
+        'Vue 3 Composition API dengan TypeScript untuk Type Safety',
+        'Desain Responsif Modern dengan DaisyUI + Tailwind CSS',
+        'Multi-Page Routing (Home, About, Blog, Contact, Category, Author, Privacy)',
+        'Component-Based Architecture (Hero, Featured Post, Category, Special Post, Testimonial)',
+        'State Management dengan Pinia & Vue Router Navigation Guards',
+        'Build Optimization via Vite dengan Hot Module Replacement (HMR)'
+    ],
+    '/assets/projects/Slicing/Hero.png',
+    '["/assets/projects/Slicing/Hero.png", "/assets/projects/Slicing/Featured.png", "/assets/projects/Slicing/Why.png"]'::jsonb
+)
+ON CONFLICT (id) DO UPDATE SET
+    title = EXCLUDED.title,
+    description = EXCLUDED.description,
+    live_url = EXCLUDED.live_url,
+    github_url = EXCLUDED.github_url,
+    technologies = EXCLUDED.technologies,
+    key_features = EXCLUDED.key_features,
+    image_url = EXCLUDED.image_url,
+    image_urls = EXCLUDED.image_urls,
+    updated_at = now();
+
+
+-- ========================================================
+-- TABLE: contact_messages (Menyimpan Pesan dari Contact Form)
+-- ========================================================
+
+CREATE TABLE IF NOT EXISTS public.contact_messages (
+    id bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,
+    name text NOT NULL,
+    email text NOT NULL,
+    message text NOT NULL,
+    created_at timestamp with time zone DEFAULT now()
+);
+
+ALTER TABLE public.contact_messages ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public insert contact_messages"
+ON public.contact_messages FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Allow authenticated read contact_messages"
+ON public.contact_messages FOR SELECT TO authenticated USING (true);

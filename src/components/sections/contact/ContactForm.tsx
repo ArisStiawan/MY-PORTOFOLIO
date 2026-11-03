@@ -9,6 +9,7 @@ import {
   Mail,
   MessageSquare,
   ArrowUpRight,
+  Loader2,
 } from 'lucide-react'
 import {
   InstagramIcon,
@@ -53,6 +54,12 @@ const socialLinks = [
     link: 'https://github.com/ArisStiawan',
   },
   {
+    title: 'TikTok',
+    user: '@tiktok',
+    icon: TiktokIcon,
+    link: 'https://www.tiktok.com/@arisable_',
+  },
+  {
     title: 'Instagram',
     user: '@instagram',
     icon: InstagramIcon,
@@ -68,7 +75,7 @@ export default function ContactForm() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
       Swal.fire({
@@ -84,21 +91,55 @@ export default function ContactForm() {
 
     setIsSubmitting(true)
 
-    const subject = encodeURIComponent(`Portfolio Message from ${formData.name}`)
-    const body = encodeURIComponent(`Nama: ${formData.name}\nEmail: ${formData.email}\n\nPesan:\n${formData.message}`)
-    window.location.href = `mailto:arisstiawan.dev@gmail.com?subject=${subject}&body=${body}`
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-    Swal.fire({
-      icon: 'success',
-      title: 'Pesan Disiapkan!',
-      text: 'Aplikasi email Anda telah dibuka. Silakan klik kirim di aplikasi email Anda.',
-      background: '#121218',
-      color: '#fff',
-      confirmButtonColor: '#00f0ff',
-    })
+      const result = await res.json()
 
-    setFormData({ name: '', email: '', message: '' })
-    setIsSubmitting(false)
+      if (result.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Pesan Terkirim!',
+          text: 'Terima kasih atas pesannya! Pesan Anda telah berhasil dikirimkan.',
+          background: '#121218',
+          color: '#fff',
+          confirmButtonColor: '#00f0ff',
+        })
+        setFormData({ name: '', email: '', message: '' })
+      } else {
+        throw new Error(result.error || 'Gagal mengirim pesan')
+      }
+    } catch {
+      // Fallback: Jika offline atau kendala koneksi, tawarkan opsi buka email langsung
+      const fallbackResult = await Swal.fire({
+        icon: 'error',
+        title: 'Pengiriman Otomatis Gagal',
+        text: 'Terjadi kendala jaringan. Ingin membuka aplikasi email untuk mengirim pesan secara manual?',
+        showCancelButton: true,
+        confirmButtonText: 'Buka Email',
+        cancelButtonText: 'Tutup',
+        confirmButtonColor: '#00f0ff',
+        cancelButtonColor: '#27272a',
+        background: '#121218',
+        color: '#fff',
+      })
+
+      if (fallbackResult.isConfirmed) {
+        const subject = encodeURIComponent(`Portfolio Message from ${formData.name}`)
+        const body = encodeURIComponent(
+          `Nama: ${formData.name}\nEmail: ${formData.email}\n\nPesan:\n${formData.message}`
+        )
+        window.location.href = `mailto:arisstiawan.dev@gmail.com?subject=${subject}&body=${body}`
+      }
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -211,8 +252,17 @@ export default function ContactForm() {
           whileTap={{ scale: 0.97 }}
           className="w-full rounded-2xl py-4 bg-white/10 hover:bg-white/20 border border-white/10 flex items-center justify-center gap-2 cursor-pointer transition font-medium disabled:opacity-50"
         >
-          <Send size={16} />
-          {isSubmitting ? 'Sending...' : 'Send Message'}
+          {isSubmitting ? (
+            <>
+              <Loader2 size={16} className="animate-spin text-white/70" />
+              <span>Mengirim Pesan...</span>
+            </>
+          ) : (
+            <>
+              <Send size={16} />
+              <span>Send Message</span>
+            </>
+          )}
         </motion.button>
       </form>
 
